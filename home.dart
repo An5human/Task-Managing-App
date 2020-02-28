@@ -50,8 +50,6 @@ class _HomeState extends State<Home> {
       showDialog(child: new Dialog(
 
         child: new Container(
-
-
           height:200,
             width: 120,
             child: new Form(
@@ -83,8 +81,8 @@ class _HomeState extends State<Home> {
               Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 10.0),
                 child:TextFormField(
-                autofocus: true,
-                decoration: const InputDecoration(
+                  autofocus: true,
+                  decoration: const InputDecoration(
                   hintText: 'Task',
                 ),
                 //style: new TextStyle(color: Colors.green),
@@ -95,8 +93,9 @@ class _HomeState extends State<Home> {
                   task = value;
                   //Processing the data.
                   return null;
-                },
-              ),),
+                  },
+                ),
+              ),
               new RaisedButton(
                 color: Colors.lightGreen,
                 highlightColor: Colors.green,
@@ -105,17 +104,21 @@ class _HomeState extends State<Home> {
                 onPressed: (){
                   if (_formKey.currentState.validate()){
                   setState((){
+                    if(_list.length==0)
                     _list.add(Task(title,task,'0'));
                   });
                   Navigator.pop(context);}
-                },
+                  },
               )
-            ],
-          )
-      ),),),context:context);
-
+              ],
+              )
+            ),
+        ),
+      ),
+          context:context
+      );
     }
-          ),
+    ),
         )
     );
   }
@@ -136,8 +139,15 @@ class _TaskState extends State<Task> {
   void remove(){
     _icon = Icon(Icons.check_box);
     _complete.add(_list[0]);
+    if(_list.length > 0)
     _list.removeAt(0);
-    Home();
+    //Home();
+  }
+
+  void delete(){
+    if(_complete.length > 0 )
+      _complete.removeAt(0);
+    //Home();
   }
 
   @override
@@ -153,7 +163,9 @@ class _TaskState extends State<Task> {
             margin: const EdgeInsets.only(right: 16.0),
             child: IconButton(icon: _icon, onPressed: (){setState(() {
               remove();
-    });}),
+            });
+            }
+    ),
           ),
           new Column(
             crossAxisAlignment: CrossAxisAlignment.start,
@@ -164,6 +176,15 @@ class _TaskState extends State<Task> {
                 child: new Text(widget.task),
               ),
             ],
+          ),
+          Spacer(),
+          new Container(
+            margin: const EdgeInsets.only(right: 16.0),
+            child: IconButton(icon: new Icon(Icons.delete) , onPressed: (){setState(() {
+              delete();
+            });
+            }
+            ),
           ),
         ],
       ),

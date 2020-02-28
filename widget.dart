@@ -63,6 +63,15 @@ class _Login extends State<Login> {
                   if (value.isEmpty) {
                     return 'Please enter some text';
                   }
+
+                  RegExp regExp = new RegExp(
+                    r"[a-zA-Z ]+",
+                    caseSensitive: false,
+                    multiLine: false,
+                  );
+                  if(regExp.hasMatch(value).toString()!='true'){
+                    return 'Please Enter a Valid Emial';
+                  }
                   username = value;
                   //Processing the data.
                   return null;
@@ -72,16 +81,26 @@ class _Login extends State<Login> {
         padding: const EdgeInsets.symmetric(horizontal: 40.0),
         child:  TextFormField(
               decoration: const InputDecoration(
-                hintText: "Please Enter Password",
+                hintText: "Please Enter Email",
               ),
                 //style: new TextStyle(color: Colors.green),
               validator: (value) {
                 if (value.isEmpty) {
                      return 'Please enter some text';
                 }
-                password = value;
+
+                RegExp regExp = new RegExp(
+                  r"[a-zA-Z0-9._]+@[a-zA-Z]+\.[a-z]+",
+                  caseSensitive: false,
+                  multiLine: false,
+                );
+                if(regExp.hasMatch(value).toString()!='true'){
+                  return 'Please Enter a Valid Value';
+                }
+              password = value;
+
                 return null;},
-          obscureText: true,
+          //obscureText: true,
             ),),
             Padding(
               padding: const EdgeInsets.symmetric(vertical: 20.0),
